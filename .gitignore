@@ -11,6 +11,15 @@
 # production
 /build
 
+salt.json
+Encrypt.js
+index.js
+session-secret.json
+Forum.db
+RestApi.js
+ACL.js
+ACLsettings.js
+
 # misc
 .DS_Store
 .env.local

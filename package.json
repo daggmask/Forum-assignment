@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/daggmask/Forum-assignment#readme",
   "dependencies": {
+    "better-express-store": "^1.0.4",
     "better-sqlite3": "^7.1.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-session": "^1.17.1"
   }
 }
