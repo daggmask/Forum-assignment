@@ -1,10 +1,11 @@
+import { Button } from 'reactstrap'
 import React from 'react'
 
 const Home = () => {
 
   return(
     <div>
-      #Home
+      <Button>Hello</Button>
     </div>
   )
 }

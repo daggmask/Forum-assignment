@@ -1,6 +1,7 @@
 //Dependencies
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
+import UserContextProvider from "./context/userContext.js";
 
 // pages
 import ForumHeader from './pages/header.js'
@@ -10,18 +11,20 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <ForumHeader/>
-                <main className="container main-content">
-                  <Switch>
-                    <Route exact path="/">
-                      <Home />
-                    </Route>
-                    {/* <Route path="/auction/:title/:id">
+        <UserContextProvider>
+          <ForumHeader />
+          <main className="container main-content">
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              {/* <Route path="/auction/:title/:id">
                       <AuctionDetailsPage />
                     </Route> */}
-                  </Switch>
-                </main>
-                    {/* footer */}
+            </Switch>
+          </main>
+          {/* footer */}
+        </UserContextProvider>
       </div>
     </BrowserRouter>
   );

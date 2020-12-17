@@ -7,7 +7,9 @@ import {
   NavItem,
   NavLink,
   Nav,
+  Button,
 } from "reactstrap";
+import LoginModal from '../users/loginModal'
 
 const ForumHeader = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,13 +48,13 @@ const ForumHeader = (props) => {
           <Nav navbar>
             <NavItem>
               <NavLink className="forum-grey text-light pointer" onClick={goToHomePage}>
-                Hem
+                <Button className="forum-button">Home</Button>
               </NavLink>
             </NavItem>
             <>
               <NavItem className="forum-grey" onClick={() => toggleModal}>
-                <NavLink className="forum-grey pointer" onClick={toggleModal}>
-                  Logga in
+                <NavLink className="forum-grey pointer">
+                  <LoginModal/>
                 </NavLink>
               </NavItem>
             </>

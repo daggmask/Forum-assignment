@@ -1,6 +1,7 @@
 :root {
   --white: #ffffff;
   --orange: orange;
+  --light-light-grey: #eeeeee;
   --light-grey: #808080;
   --grey: #292929;
   --dark-grey: #1b1b1b;
@@ -43,6 +44,10 @@
 
 .light-grey-background {
   background-color: var(--light-grey) !important;
+}
+
+.light-light-grey-background {
+   background-color: var(--light-light-grey) !important;
 }
 
 .dark-grey-background {
