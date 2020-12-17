@@ -15,7 +15,7 @@ module.exports = class RestApi {
       this.createPutRoute(table);
       this.createDeleteRoute(table);
     }
-    this.addLoginRoutes()
+    this.addLoginRoutes();
   }
 
   getAllTables() {
@@ -103,11 +103,21 @@ module.exports = class RestApi {
     });
   }
 
+  getUserModeratorSubjects() {
+    this.app.get(this.prefix + "user" + "/:id", (req,res) => {
+      let statement = this.db.prepare(`
+      
+      `)
+      let result = statement.get(req.params) || null;
+      res.json(result)
+    });
+  }
+
   //Add routes for login, check if logged in
   //and logout - /note: not pure rest-routes
   addLoginRoutes() {
-    this.app.post(this.prefix + 'login', (req,res) => {
-      if(req.body.password){
+    this.app.post(this.prefix + "login", (req, res) => {
+      if (req.body.password) {
         req.body.password = Encrypt.multiEncrypt(req.body.password);
       }
 
@@ -115,26 +125,26 @@ module.exports = class RestApi {
         SELECT * FROM users
         WHERE email = $email
         AND password = $password
-      `)
+      `);
 
       let user = statements.get(req.body) || null;
 
-      if(user){
-        delete user.password
-        req.session.user = user
+      if (user) {
+        delete user.password;
+        req.session.user = user;
       }
 
-      res.json(user)
-    })
+      res.json(user);
+    });
 
-    this.app.get(this.prefix + 'login', (req,res) => {
-      res.json(req.session.user || null)
-    })
+    this.app.get(this.prefix + "login", (req, res) => {
+      res.json(req.session.user || null);
+    });
 
-    this.app.delete(this.prefix + 'login', (req,res) => {
-      delete req.session.user
-      res.json({loggedOut: true})
-    })
+    this.app.delete(this.prefix + "login", (req, res) => {
+      delete req.session.user;
+      res.json({ loggedOut: true });
+    });
   }
 };
 
