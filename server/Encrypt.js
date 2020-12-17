@@ -6,7 +6,7 @@ module.exports = class Encrypt{
 
 static encrypt(password){
  return crypto
-  .createHmac("sha256", require('../salt.json'))
+  .createHmac("sha256", require('./salt.json'))
   .update(password)
   .digest('hex')
 }
