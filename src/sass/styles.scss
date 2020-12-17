@@ -1,0 +1,73 @@
+:root {
+  --white: #ffffff;
+  --orange: orange;
+  --light-grey: #808080;
+  --grey: #292929;
+  --dark-grey: #1b1b1b;
+  --red: #ff131a;
+}
+
+.main-content {
+  min-height: calc(100vh - 180px);
+  color:white
+}
+
+.forum-orange {
+  color: var(--orange);
+}
+
+.forum-white {
+  color: var(--white);
+}
+
+.forum-light-grey {
+  color: var(--light-grey);
+}
+
+.forum-grey {
+  color: var(--grey) !important;
+}
+
+.forum-dark-grey {
+  color: var(--dark-grey);
+}
+
+.forum-button {
+  border: none !important;
+  background-color: var(--orange) !important;
+}
+
+.borderRadius {
+  border-radius: 8px;
+}
+
+.light-grey-background {
+  background-color: var(--light-grey) !important;
+}
+
+.dark-grey-background {
+  background-color: var(--dark-grey) !important;
+}
+
+.grey-background {
+  background-color: var(--grey) !important;
+}
+
+.orange-background {
+  background-color: var(--orange) !important;
+  border-color: var(--orange) !important;
+  padding: 0 7px;
+}
+
+.orange-border {
+  border: 1px solid var(--orange);
+}
+
+.click-text :hover {
+  cursor: pointer;
+  color: var(--orange) !important;
+}
+
+.pointer {
+  cursor: pointer;
+}

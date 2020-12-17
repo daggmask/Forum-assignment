@@ -1,18 +1,29 @@
+//Dependencies
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+
+// pages
+import ForumHeader from './pages/header.js'
+import Home from './pages/home'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <ForumHeader/>
+                <main className="container main-content">
+                  <Switch>
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                    {/* <Route path="/auction/:title/:id">
+                      <AuctionDetailsPage />
+                    </Route> */}
+                  </Switch>
+                </main>
+                    {/* footer */}
+      </div>
+    </BrowserRouter>
   );
 }
 
