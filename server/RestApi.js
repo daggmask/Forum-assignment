@@ -9,13 +9,19 @@ module.exports = class RestApi {
 
     let tables = this.getAllTables();
     for (let table of tables) {
-      this.createGetAllRoute(table);
-      this.createGetRoute(table);
-      this.createPostRoute(table);
-      this.createPutRoute(table);
-      this.createDeleteRoute(table);
-    }
-    this.addLoginRoutes();
+      if(table !== "usersXposts"){       
+        this.createGetAllRoute(table);
+        this.createGetRoute(table);
+        this.createPostRoute(table);
+        this.createPutRoute(table);
+        this.createDeleteRoute(table);
+      }
+      else{
+         this.getUserModeratorSubjects(table);
+      }
+      }
+     
+      this.addLoginRoutes();
   }
 
   getAllTables() {
@@ -32,15 +38,13 @@ module.exports = class RestApi {
       let statement = this.db.prepare(`
       SELECT * FROM ${table}
     `);
-      /*let result = statement.all();
-      result.forEach(x => delete x.password)
-      res.json(result);*/
       res.json(statement.all().map((x) => ({ ...x, password: undefined })));
     });
   }
 
   createGetRoute(table) {
     this.app.get(this.prefix + table + "/:id", (req, res) => {
+      console.log(table);
       let statement = this.db.prepare(`
       SELECT * FROM ${table}
       WHERE id = $id
@@ -56,13 +60,9 @@ module.exports = class RestApi {
   createPostRoute(table) {
     this.app.post(this.prefix + table, (req, res) => {
       let b = req.body;
-      // If the request body has a key password
-      // then encrypt the password
       if (b.password) {
         b.password = Encrypt.multiEncrypt(b.password);
       }
-      // Build the statement according to the keys
-      // in the request body
       let statement = this.db.prepare(`
       INSERT INTO ${table} (${Object.keys(b)})
       VALUES (${Object.keys(b).map((x) => "$" + x)})
@@ -103,12 +103,12 @@ module.exports = class RestApi {
     });
   }
 
-  getUserModeratorSubjects() {
-    this.app.get(this.prefix + "user" + "/:id", (req,res) => {
+  getUserModeratorSubjects(table) {
+    this.app.get(this.prefix + "usersXposts" + "/:id", (req,res) => {
       let statement = this.db.prepare(`
-      
-      `)
-      let result = statement.get(req.params) || null;
+        SELECT * FROM ${table} WHERE userId = $id
+      `);
+      let result = statement.all(req.params) || null;
       res.json(result)
     });
   }

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
-import PasswordInputField from './passwordInputField'
 
 const LoginModal = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +8,10 @@ const LoginModal = () => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
+
+  useEffect(() => {
+    console.log(email + " " + password);
+  },[email && password])
 
   return (
     <div>
@@ -36,9 +39,19 @@ const LoginModal = () => {
               />
             </FormGroup>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
-              <PasswordInputField
-                setPassword={setPassword}
-                password={password}
+              <Label
+             for="password"
+              className="forum-dark-grey font-weight-bold col-12 custom-password-label"
+            >
+              Lösenord
+            </Label>
+             <Input
+                required
+                className="light-light-grey-background forum-input col-10 noBorder"
+                type="password"
+                placeholder="Lösenord"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormGroup>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
