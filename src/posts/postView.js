@@ -1,15 +1,17 @@
 import React from 'react'
-import { Card, Button, CardTitle, CardText, Row, Col } from "reactstrap";
+import { Toast, ToastBody, ToastHeader } from "reactstrap";
 
 const PostView = ({post}) => {
 
   return (
-    <Card body>
-      <CardText>
-        Post content
-      </CardText>
-      <Button>Go somewhere</Button>
-    </Card>
+    <div className="p-3 bg-dark text-dark my-2 rounded">
+      <Toast>
+        <ToastHeader>{post.subject}</ToastHeader>
+        <ToastBody>
+          {post.content}
+        </ToastBody>
+      </Toast>
+    </div>
   );
 }
 

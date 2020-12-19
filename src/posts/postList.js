@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Row } from "reactstrap";
 import PostView from './postView'
 
 const PostList = () => {
@@ -18,6 +19,7 @@ const PostList = () => {
 
   return(
     <div className="col-12 container">
+      <Row>
       {postList.map(post => {
         return(
           <div className="col-4">
@@ -25,6 +27,7 @@ const PostList = () => {
           </div>
         )
       })}
+      </Row>
     </div>
   )
 }
