@@ -10,31 +10,15 @@ const LoginModal = () => {
   const toggle = () => setModal(!modal);
 
   const doLogin = async () => {
-    // const credentials = {email: email, password: password}
-    console.log(
-      JSON.stringify({
-        email: "yaooo@gmail.com",
-        password: "12345",
-      })
-    );
-    let res = await fetch("http://localhost:4000/api/login", {
+    const credentials = {email: email, password: password}
+    let res = await fetch("/api/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "no-cors",
-      url: "http://localhost:4000",
-      body: JSON.stringify({
-        email: "yaooo@gmail.com",
-        password: "12345",
-      }),
-    });
-    try{
-      res = await res.json()
-      console.log(res);
-    }
-    catch{
-    }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
   }
 
   useEffect(() => {
