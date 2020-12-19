@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
+import {UserContext} from "../context/userContext"
 
 const LoginModal = () => {
+  const {user, setUser} = useContext(UserContext)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessageShown, setErrorMessageShown] = useState(false);
@@ -17,7 +20,7 @@ const LoginModal = () => {
       body: JSON.stringify(credentials),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => setUser(data))
       .catch((err) => console.error(err));
   }
 
