@@ -1,11 +1,12 @@
 import { Button } from 'reactstrap'
 import React from 'react'
+import PostList from '../posts/postList'
 
 const Home = () => {
 
   return(
     <div>
-      <Button>Hello</Button>
+      <PostList/>
     </div>
   )
 }
