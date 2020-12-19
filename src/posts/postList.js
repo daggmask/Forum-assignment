@@ -5,11 +5,12 @@ const PostList = () => {
   const [postList, setPostList] = useState([])
 
   const fetchPosts = async () => {
-    let list = await fetch("http://localhost:4000/api/posts");
-    list = await list.json()
-    console.log(list);
-    setPostList(list)
-  }
+    let res = await fetch("/api/posts")
+      .then((response) => response.json())
+      .then((data) => setPostList(data))
+      .catch((err) => console.error(err));
+      console.log(postList);
+  };
 
   useEffect(() => {
     fetchPosts()

@@ -9,6 +9,34 @@ const LoginModal = () => {
 
   const toggle = () => setModal(!modal);
 
+  const doLogin = async () => {
+    // const credentials = {email: email, password: password}
+    console.log(
+      JSON.stringify({
+        email: "yaooo@gmail.com",
+        password: "12345",
+      })
+    );
+    let res = await fetch("http://localhost:4000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "no-cors",
+      url: "http://localhost:4000",
+      body: JSON.stringify({
+        email: "yaooo@gmail.com",
+        password: "12345",
+      }),
+    });
+    try{
+      res = await res.json()
+      console.log(res);
+    }
+    catch{
+    }
+  }
+
   useEffect(() => {
     console.log(email + " " + password);
   },[email && password])
@@ -62,7 +90,7 @@ const LoginModal = () => {
               ) : (
                 ""
               )}
-              <Button className="forum-button col-xs-8 col-sm-12 col-md-12 col-lg-12 font-weight-bold">
+              <Button className="forum-button col-xs-8 col-sm-12 col-md-12 col-lg-12 font-weight-bold" onClick={() => doLogin()}>
                 Logga in
               </Button>
             </FormGroup>

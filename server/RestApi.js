@@ -20,7 +20,6 @@ module.exports = class RestApi {
          this.getUserModeratorSubjects(table);
       }
       }
-     
       this.addLoginRoutes();
   }
 
@@ -120,13 +119,13 @@ module.exports = class RestApi {
       if (req.body.password) {
         req.body.password = Encrypt.multiEncrypt(req.body.password);
       }
+      console.log(req.body);
 
       let statements = this.db.prepare(`
         SELECT * FROM users
         WHERE email = $email
         AND password = $password
       `);
-
       let user = statements.get(req.body) || null;
 
       if (user) {
