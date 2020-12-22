@@ -46,7 +46,7 @@ module.exports = {
     }
     return false;
   },
-  usersXposts(user, method, req) {
+  usersXsubjects(user, method, req) {
     if (method === "GET" && user.userRole) {
       return true;
     }

@@ -6,7 +6,7 @@ const PostList = () => {
   const [postList, setPostList] = useState([])
 
   const fetchPosts = async () => {
-    let res = await fetch("/api/posts")
+    await fetch("/api/posts")
       .then((response) => response.json())
       .then((data) => setPostList(data))
       .catch((err) => console.error(err));

@@ -1,3 +1,2 @@
-1. Insert into terminal: node/nodemon server
-2. npm start
-3. go to
+This project/application uses amazing-proxy thus you can start backend and frontend localhost server
+using: npm start

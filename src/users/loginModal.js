@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, In
 import {UserContext} from "../context/userContext"
 
 const LoginModal = () => {
-  const {user, setUser} = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,19 +14,20 @@ const LoginModal = () => {
 
   const doLogin = async () => {
     const credentials = {email: email, password: password}
-    let res = await fetch("/api/login", {
+    await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     })
       .then((response) => response.json())
       .then((data) => setUser(data))
+      .then(() => setModal(false))
       .catch((err) => console.error(err));
   }
 
   useEffect(() => {
     console.log(email + " " + password);
-  },[email && password])
+  },[email, password])
 
   return (
     <div>
