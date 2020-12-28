@@ -20,7 +20,10 @@ const LoginModal = () => {
       body: JSON.stringify(credentials),
     })
       .then((res) => res.json())
-      .then((data) => data ? setUser(data) & setModal(false) & setErrorMessageShown(false) : setErrorMessageShown(true))
+      .then((data) => data ? setUser(data)
+         & setModal(false)
+         & setErrorMessageShown(false) 
+         : setErrorMessageShown(true))
       .catch((error) => console.error(error));
   }
 
