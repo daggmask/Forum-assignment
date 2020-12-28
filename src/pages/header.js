@@ -10,6 +10,7 @@ import {
   Button,
 } from "reactstrap";
 import LoginModal from '../users/loginModal'
+import PostCreation from '../posts/postCreation'
 
 const ForumHeader = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +56,11 @@ const ForumHeader = (props) => {
               <NavItem className="forum-grey" onClick={() => toggleModal}>
                 <NavLink className="forum-grey pointer">
                   <LoginModal/>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>
+                  <PostCreation/>
                 </NavLink>
               </NavItem>
             </>
