@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, In
 import {UserContext} from "../context/userContext"
 
 const LoginModal = () => {
-  const {setUser} = useContext(UserContext)
+  const {user,setUser} = useContext(UserContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,10 +19,19 @@ const LoginModal = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     })
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .then(() => setModal(false))
-      .catch((err) => console.error(err));
+      .then((res) => res.json())
+      .then((data) => data ? setUser(data) & setModal(false) : null)
+      .catch((error) => console.error(error));
+  }
+
+  const doLogout = async() => {
+    await fetch("/api/login",{
+      method: "DELETE"
+    })
+      .then((res) => res.json())
+      .then(() => setUser(null))
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error))
   }
 
   useEffect(() => {
@@ -31,9 +40,13 @@ const LoginModal = () => {
 
   return (
     <div>
-      <Button className="forum-button" onClick={toggle}>
-        Login
+      {user ? 
+      <Button className="forum-button" onClick={() => doLogout()}>
+        Logout
       </Button>
+      :<Button className="forum-button" onClick={toggle}>
+      Login
+    </Button>}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="text-center mx-auto">Login</ModalHeader>
         <ModalBody>
