@@ -5,12 +5,12 @@ module.exports = {
     if (method === "GET" && user.userRole === req.body.id) {
       return true;
     }
-    if (method === "POST" && user.userRole === "admin") {
+    if (method === "POST") {
       return true;
     }
-    if (method === "POST" && req.body.userRole === "basicUser") {
-      return true;
-    }
+    // if (method === "POST" && req.body.userRole === "basicUser") {
+    //   return true;
+    // }
     if (method === "PUT" && user.userRole === "admin") {
       return true;
     }
@@ -46,7 +46,7 @@ module.exports = {
     }
     return false;
   },
-  usersXposts(user, method, req) {
+  usersXsubjects(user, method, req) {
     if (method === "GET" && user.userRole) {
       return true;
     }

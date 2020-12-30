@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, In
 import {UserContext} from "../context/userContext"
 
 const LoginModal = () => {
-  const {user, setUser} = useContext(UserContext)
+  const {user,setUser} = useContext(UserContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,25 +14,38 @@ const LoginModal = () => {
 
   const doLogin = async () => {
     const credentials = {email: email, password: password}
-    let res = await fetch("/api/login", {
+    await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     })
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((err) => console.error(err));
+      .then((res) => res.json())
+      .then((data) => data ? setUser(data)
+         & setModal(false)
+         & setErrorMessageShown(false) 
+         : setErrorMessageShown(true))
+      .catch((error) => console.error(error));
   }
 
-  useEffect(() => {
-    console.log(email + " " + password);
-  },[email && password])
+  const doLogout = async() => {
+    await fetch("/api/login",{
+      method: "DELETE"
+    })
+      .then((res) => res.json())
+      .then(() => setUser(null))
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error))
+  }
 
   return (
     <div>
-      <Button className="forum-button" onClick={toggle}>
-        Login
+      {user ? 
+      <Button className="forum-button" onClick={() => doLogout()}>
+        Logout
       </Button>
+      :<Button className="forum-button" onClick={toggle}>
+      Login
+    </Button>}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="text-center mx-auto">Login</ModalHeader>
         <ModalBody>
