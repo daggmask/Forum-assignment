@@ -13,12 +13,9 @@ import LoginModal from '../users/loginModal'
 import PostCreation from '../posts/postCreation'
 
 const ForumHeader = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [chatModalisOpen, setChatModalIsOpen] = useState(false);
   let history = useHistory();
-
-  const toggle = () => setIsOpen(!isOpen);
 
   const goToHomePage = () => {
     history.push("/");
@@ -28,9 +25,6 @@ const ForumHeader = (props) => {
   };
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
-  };
-  const toggleChatModal = () => {
-    setChatModalIsOpen(!modalIsOpen);
   };
 
   return (
@@ -45,7 +39,6 @@ const ForumHeader = (props) => {
           </h3>
         </NavbarBrand>
 
-        <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
             <NavItem>
               <NavLink className="forum-grey text-light pointer" onClick={goToHomePage}>
@@ -65,7 +58,6 @@ const ForumHeader = (props) => {
               </NavItem>
             </>
           </Nav>
-        </Collapse>
       </Navbar>
     </div>
   );

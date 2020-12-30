@@ -37,10 +37,6 @@ const LoginModal = () => {
       .catch((error) => console.error(error))
   }
 
-  useEffect(() => {
-    console.log(email + " " + password);
-  },[email, password])
-
   return (
     <div>
       {user ? 

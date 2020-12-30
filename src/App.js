@@ -2,6 +2,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import UserContextProvider from "./context/userContext.js";
+import PostContextProvider from "./context/postContext.js"
 
 // pages
 import ForumHeader from './pages/header.js'
@@ -11,6 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <PostContextProvider>
         <UserContextProvider>
           <ForumHeader />
           <main className="container main-content">
@@ -23,7 +25,8 @@ function App() {
                     </Route> */}
             </Switch>
           </main>
-        </UserContextProvider>
+        </UserContextProvider>          
+        </PostContextProvider>
       </div>
     </BrowserRouter>
   );
