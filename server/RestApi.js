@@ -17,7 +17,6 @@ module.exports = class RestApi {
         this.createDeleteRoute(table);
       }
       else{
-        console.log(table);
         this.getUserModeratorSubjects(table);
       }
       }
@@ -104,14 +103,6 @@ module.exports = class RestApi {
   }
 
   getUserModeratorSubjects(table) {
-    
-    // this.app.get(this.prefix + table + "/:id", (req,res) => {
-    //   let statement = this.db.prepare(`
-    //     SELECT * FROM ${table} WHERE userId = $id
-    //   `);
-    //   let result = statement.get(req.params) || null;
-    //   res.json(result)
-    // });
 
     this.app.get(this.prefix + table + "/:id", (req, res) => {
       console.log(table);

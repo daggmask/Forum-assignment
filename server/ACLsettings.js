@@ -32,6 +32,9 @@ module.exports = {
     if (method === "POST" && user.userRole) {
       return true;
     }
+    if (method === "PUT" && user.id === req.body.creatorId) {
+      return true;
+    }
     if (method === "PUT" && user.userRole === "moderator") {
       return true;
     }
