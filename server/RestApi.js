@@ -9,7 +9,7 @@ module.exports = class RestApi {
 
     let tables = this.getAllTables();
     for (let table of tables) {
-      if(table !== "usersXposts"){       
+      if(table !== "usersXsubjects"){       
         this.createGetAllRoute(table);
         this.createGetRoute(table);
         this.createPostRoute(table);
@@ -17,7 +17,8 @@ module.exports = class RestApi {
         this.createDeleteRoute(table);
       }
       else{
-         this.getUserModeratorSubjects(table);
+        console.log(table);
+        this.getUserModeratorSubjects(table);
       }
       }
       this.addLoginRoutes();
@@ -103,12 +104,23 @@ module.exports = class RestApi {
   }
 
   getUserModeratorSubjects(table) {
-    this.app.get(this.prefix + "usersXposts" + "/:id", (req,res) => {
+    
+    // this.app.get(this.prefix + table + "/:id", (req,res) => {
+    //   let statement = this.db.prepare(`
+    //     SELECT * FROM ${table} WHERE userId = $id
+    //   `);
+    //   let result = statement.get(req.params) || null;
+    //   res.json(result)
+    // });
+
+    this.app.get(this.prefix + table + "/:id", (req, res) => {
+      console.log(table);
       let statement = this.db.prepare(`
-        SELECT * FROM ${table} WHERE userId = $id
-      `);
-      let result = statement.all(req.params) || null;
-      res.json(result)
+      SELECT * FROM ${table}
+      WHERE userId = $id
+    `);
+      let result = statement.get(req.params) || null;
+      res.json(result);
     });
   }
 

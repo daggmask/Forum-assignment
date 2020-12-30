@@ -47,8 +47,12 @@ module.exports = {
     return false;
   },
   usersXsubjects(user, method, req) {
+    if (method === "GET") {
+      return true;
+    }
     if (method === "GET" && user.userRole) {
       return true;
     }
+    return false
   },
 };
