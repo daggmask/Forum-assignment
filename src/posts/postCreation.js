@@ -19,14 +19,22 @@ const PostCreation = () => {
     }
   };
 
-  const createPost = () => {
-    //end
+  const createPost = async () => {
+    let post = {creatorId: user.id, content: postContent, subject: postSubject}
+    console.log(post);
+
+    await fetch("/api/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(post),
+    })
+    .then((res) => res.json())
+    .then(() => setModal(false))
+    .catch((error) => console.error(error));
+
+    //Trigger render on posts
     setRender(!render)
   }
-
-  useEffect(() => {
-    console.log(postContent + " " + postSubject);
-  },[postContent, postSubject])
 
 
 
