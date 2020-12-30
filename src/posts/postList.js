@@ -4,7 +4,7 @@ import PostView from './postView'
 import {PostContext} from '../context/postContext'
 
 const PostList = () => {
-  const {render,setRender} = useContext(PostContext)
+  const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])
 
   const fetchPosts = async () => {

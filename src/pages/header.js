@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import {
-  Collapse,
   Navbar,
   NavbarBrand,
   NavItem,
@@ -14,15 +13,16 @@ import PostCreation from '../posts/postCreation'
 
 const ForumHeader = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [chatModalisOpen, setChatModalIsOpen] = useState(false);
   let history = useHistory();
 
   const goToHomePage = () => {
     history.push("/");
   };
+
   const goToMyPage = () => {
     history.push("/mypage");
   };
+
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
