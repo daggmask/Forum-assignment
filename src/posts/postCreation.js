@@ -6,6 +6,7 @@ import {PostContext} from '../context/postContext'
 const PostCreation = () => {
   const {render,setRender} = useContext(PostContext)
   const {user} = useContext(UserContext)
+  const [postTitle, setPostTitle] = useState("")
   const [postContent, setPostContent] = useState("")
   const [postSubject, setPostSubject] = useState("General")
 
@@ -14,13 +15,14 @@ const PostCreation = () => {
   const toggle = () => {
     setModal(!modal)
     if(!modal){
+      setPostTitle("")
       setPostContent("")
       setPostSubject("General")
     }
   };
 
   const createPost = async () => {
-    let post = {creatorId: user.id, content: postContent, subject: postSubject}
+    let post = {creatorId: user.id, title:postTitle, content: postContent, subject: postSubject}
     console.log(post);
 
     await fetch("/api/posts", {
@@ -49,7 +51,11 @@ const PostCreation = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="text-center mx-auto">Create a post</ModalHeader>
         <ModalBody>
-          <Form onSubmit={() => console.log("hello")}>
+          <Form>
+          <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
+            <Label for="postTitle">Title</Label>
+            <Input placeholder="Title..." onChange={((e) => setPostTitle(e.target.value))} id="postTitle" />
+            </FormGroup>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
             <Label for="postContent">Content</Label>
             <Input type="textarea" placeholder="Enter content..." onChange={((e) => setPostContent(e.target.value))} id="postContent" />

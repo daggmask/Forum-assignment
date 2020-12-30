@@ -1,13 +1,9 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 
 export const PostContext = createContext();
 
 const PostContextProvider = (props) => {
   const [render, setRender] = useState(false);
-
-  useEffect(() => {
-    console.log(render);
-  }, [render]);
 
   const values = {
     render,

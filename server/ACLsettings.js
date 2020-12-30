@@ -32,6 +32,9 @@ module.exports = {
     if (method === "POST" && user.userRole) {
       return true;
     }
+    if (method === "PUT" && user.id === req.body.creatorId) {
+      return true;
+    }
     if (method === "PUT" && user.userRole === "moderator") {
       return true;
     }
@@ -47,8 +50,12 @@ module.exports = {
     return false;
   },
   usersXsubjects(user, method, req) {
+    if (method === "GET") {
+      return true;
+    }
     if (method === "GET" && user.userRole) {
       return true;
     }
+    return false
   },
 };

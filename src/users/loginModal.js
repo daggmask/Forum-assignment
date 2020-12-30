@@ -49,7 +49,7 @@ const LoginModal = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="text-center mx-auto">Login</ModalHeader>
         <ModalBody>
-          <Form onSubmit={() => console.log("hello")}>
+          <Form>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 m-0">
               <Label
                 for="emailAddress"
