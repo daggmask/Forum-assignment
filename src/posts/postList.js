@@ -30,13 +30,6 @@ const PostList = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[render])
 
-  useEffect(() => {
-    console.log(filterOption);
-    let filteredPost = postList
-    filteredPost = filteredPost.filter(post => post.subject === filterOption)
-    console.log(filteredPost);
-  },[filterOption])
-
   return(
     <div className="col-12 container">
       <PostFilterButton filterOption={filterOption} setFilterOption={setFilterOption}/>
