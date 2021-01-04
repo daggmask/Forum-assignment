@@ -1,7 +1,6 @@
 import React, { useContext} from 'react'
 import { Toast, ToastBody, ToastHeader } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import {UserContext} from "../context/userContext"
 import {PostContext} from '../context/postContext'
 import {getDatePosted} from '../helpers/helpers'
 

@@ -3,6 +3,7 @@ import { Card, Button, CardTitle, CardText, Form, Input, FormGroup, Label } from
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
 import {getDatePosted} from '../helpers/helpers'
+import Comments from './comments'
 
 const PostPage = () => {
 
@@ -54,6 +55,7 @@ const postComment = async () => {
 
 useEffect(() => {
   getPostsComments()
+  console.log("Here");
   return () => {
     setCommentPost("")
     setComments([])
@@ -94,16 +96,7 @@ useEffect(() => {
           </Form>
             :<h6 className="forum-dark-grey text-center m-4">Login to comment</h6> }
         </div> 
-        {comments.map(comment => {
-          return(
-            <div className="mt-2">
-           <Card className="col-6 mx-auto">
-          <CardTitle className="forum-dark-grey m-2"><h6>{comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
-           <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
-           </Card>
-            </div>
-          )
-        }).sort((a,b) => a.timePosted > b.timePosted ? 1 : -1)}
+        <Comments comments={comments}/>
     </div>
   )
 } 

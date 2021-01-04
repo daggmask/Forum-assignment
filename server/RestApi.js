@@ -115,7 +115,7 @@ module.exports = class RestApi {
       SELECT * FROM ${table}
       WHERE userId = $id
     `);
-      let result = statement.get(req.params) || null;
+      let result = statement.all(req.params) || [];
       res.json(result);
     });
   }
@@ -161,7 +161,6 @@ module.exports = class RestApi {
       WHERE post = $postId
     `);
       let result = statement.all(req.params) || [];
-      console.log(result);
       res.json(result);
     });
   }
