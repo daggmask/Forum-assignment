@@ -49,6 +49,20 @@ module.exports = {
     }
     return false;
   },
+  comments(user,method,req){
+    if(method === "GET"){
+      return true;
+    }
+    if(method === "POST" && user.userRole){
+      return true
+    }
+    if(method === "PUT" && user.id === req.body.user){
+      return true
+    }
+    if(method === "DELETE" && user.id === req.body.user){
+      return true
+    }
+  },
   usersXsubjects(user, method, req) {
     if (method === "GET") {
       return true;

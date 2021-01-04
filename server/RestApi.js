@@ -11,7 +11,12 @@ module.exports = class RestApi {
     for (let table of tables) {
       if(table !== "usersXsubjects"){       
         this.createGetAllRoute(table);
-        this.createGetRoute(table);
+        if(table !== "comments"){
+          this.createGetRoute(table);
+        }
+        else{
+          this.getCommentsForPost(table)
+        }
         this.createPostRoute(table);
         this.createPutRoute(table);
         this.createDeleteRoute(table);
@@ -146,6 +151,18 @@ module.exports = class RestApi {
     this.app.delete(this.prefix + "login", (req, res) => {
       delete req.session.user;
       res.json({ loggedOut: true });
+    });
+  }
+
+  getCommentsForPost(table){
+    this.app.get(this.prefix + table + "/:postId", (req, res) => {
+      let statement = this.db.prepare(`
+      SELECT * FROM ${table}
+      WHERE post = $postId
+    `);
+      let result = statement.all(req.params) || [];
+      console.log(result);
+      res.json(result);
     });
   }
 };
