@@ -11,16 +11,37 @@ const {user} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
 const [comments, setComments] = useState([])
+const [editPressed, setEditPressed] = useState(false)
+const [postTitle, setPostTitle] = useState(selectedPost.title)
+const [postContent, setPostContent] = useState(selectedPost.content)
+
+let condition = user ? selectedPost.creatorId === user.id : false
+
+const saveChanges = async () => {
+  let updatedPost = Object.assign({},selectedPost)
+  updatedPost.title = postTitle
+  updatedPost.content = postContent
+
+  await fetch("/api/posts/" + selectedPost.id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedPost),
+  })
+  .then((res) => res.json())
+  .then(() => setEditPressed(false))
+  .catch((error) => console.error(error));
+  //Trigger render on posts
+}
 
 const getPostsComments = async () => {
   await fetch("/api/comments/" + selectedPost.id)
     .then((res) => res.json())
-    .then((data) => setComments(data))
+    .then((data) => setComments(data) & setCommentPost(""))
     .catch((error) => console.error(error))
 }
 
 const postComment = async () => {
-  let commentCredentials = {post: selectedPost.id, user: user.email, userId: user.id, content: commentPost, timePosted: new Date().getTime()}
+  let commentCredentials = {post: selectedPost.id, user: user.username, userId: user.id, content: commentPost, timePosted: new Date().getTime()}
   console.log(commentCredentials);
   await fetch("/api/comments",{
     method: "POST",
@@ -39,18 +60,28 @@ useEffect(() => {
   }
 }, [])
 
-useEffect(() => {
-  console.log(comments);
-},[comments])
-
-console.log(selectedPost);
-
   return(
     <div>
         <Card body className="orange-background">
-          <CardTitle className="mx-auto"><h4>{selectedPost.title}</h4></CardTitle>
+          <CardTitle className="mx-auto"><h4>
+            {editPressed ? 
+        <Input value={postTitle} onChange={(e) => setPostTitle(e.target.value)}></Input>
+        : postTitle}</h4>
+        </CardTitle>
           <CardTitle className="mx-auto"><h6>Posted: {getDatePosted(selectedPost.timePosted)}</h6></CardTitle>
-    <CardText className="mx-auto">{selectedPost.content}</CardText>
+        <CardText className="mx-auto"> 
+        {editPressed ?
+          <Input type="textarea" value={postContent} onChange={(e) => setPostContent(e.target.value)}></Input>
+          : postContent}
+          </CardText>
+        {editPressed ? <Button className="forum-button-dark m-2 col-4 mx-auto" onClick={() => saveChanges()}>
+            Save
+          </Button> : null}
+        {condition ?
+        <Button className=" m-2 col-4 mx-auto" onClick={() => setEditPressed(!editPressed)}>
+            Edit
+          </Button>
+           : null}
         </Card>
         <div className="container">
         {user ? 
@@ -67,14 +98,12 @@ console.log(selectedPost);
           return(
             <div className="mt-2">
            <Card className="col-6 mx-auto">
-          <CardTitle className="forum-dark-grey mx-auto"><h6>Posted by: {comment.user}</h6></CardTitle>
-           <CardTitle className="forum-dark-grey mx-auto"><h6>Commented: {getDatePosted(comment.timePosted)}</h6></CardTitle>
-           <CardText className="forum-dark-grey mx-auto">{comment.content}</CardText>
+          <CardTitle className="forum-dark-grey m-2"><h6>{comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
+           <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
            </Card>
-              {/* <h6 className="forum-dark-grey">{comment.content} {getDatePosted(comment.timePosted)}</h6> */}
             </div>
           )
-        })}
+        }).sort((a,b) => a.timePosted > b.timePosted ? 1 : -1)}
     </div>
   )
 } 

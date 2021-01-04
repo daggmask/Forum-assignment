@@ -131,7 +131,7 @@ module.exports = class RestApi {
 
       let statements = this.db.prepare(`
         SELECT * FROM users
-        WHERE email = $email
+        WHERE username = $username
         AND password = $password
       `);
       let user = statements.get(req.body) || null;

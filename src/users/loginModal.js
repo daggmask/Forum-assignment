@@ -6,7 +6,7 @@ import UserCreation from './userCreation'
 const LoginModal = () => {
   const {user,setUser} = useContext(UserContext)
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessageShown, setErrorMessageShown] = useState(false);
   const [modal, setModal] = useState(false);
@@ -14,7 +14,7 @@ const LoginModal = () => {
   const toggle = () => setModal(!modal);
 
   const doLogin = async () => {
-    const credentials = {email: email, password: password}
+    const credentials = {username: username, password: password}
     await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -56,15 +56,15 @@ const LoginModal = () => {
                 for="emailAddress"
                 className="forum-dark-grey font-weight-bold col-12"
               >
-                Email
+                Username
               </Label>
               <Input
                 required
                 className="light-light-grey-background forum-input"
                 type="email"
-                placeholder="Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Username..."
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormGroup>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">

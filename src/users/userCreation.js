@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, In
 
 const UserCreation = ({doLogin}) => {
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessageShown, setErrorMessageShown] = useState(false);
   const [modal, setModal] = useState(false);
@@ -11,7 +11,7 @@ const UserCreation = ({doLogin}) => {
   const toggle = () => setModal(!modal);
 
   const registerUser = async () => {
-    const credentials = {email: email, password: password, userRole: "basicUser"}
+    const credentials = {username: username, password: password, userRole: "basicUser"}
     await fetch("/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,15 +45,15 @@ const UserCreation = ({doLogin}) => {
                 for="emailAddress"
                 className="forum-dark-grey font-weight-bold col-12"
               >
-                Email
+                Username
               </Label>
               <Input
                 required
                 className="light-light-grey-background forum-input"
-                type="email"
-                placeholder="Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Username..."
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormGroup>
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
