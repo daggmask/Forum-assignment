@@ -32,6 +32,12 @@ const PostView = ({post}) => {
     setRender(!render)
   }
 
+  const getDatePosted = (time) => {
+    let date =  `
+    ${new Date(time).getFullYear()}-${new Date(time).getMonth() < 10 ? "0" + new Date(time).getMonth() : new Date(time).getMonth()}-${new Date(time).getDay()}`
+    return date
+  }
+
   useEffect(() => {
     if(!editPressed){
       setPostTitle(post.title)
@@ -45,6 +51,7 @@ const PostView = ({post}) => {
       <Toast onClick={toggle}>
         <ToastHeader>{post.title}</ToastHeader>
         <ToastBody>
+          <h6>Posted: {getDatePosted(post.timePosted)}</h6>
          <h6>{post.subject}</h6>
           <p>
           {post.content}

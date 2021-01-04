@@ -22,7 +22,7 @@ const PostCreation = () => {
   };
 
   const createPost = async () => {
-    let post = {creatorId: user.id, title:postTitle, content: postContent, subject: postSubject}
+    let post = {creatorId: user.id, title:postTitle, content: postContent, subject: postSubject, timePosted: new Date().getTime()}
     console.log(post);
 
     await fetch("/api/posts", {

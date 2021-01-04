@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
 import {UserContext} from "../context/userContext"
+import UserCreation from './userCreation'
 
 const LoginModal = () => {
   const {user,setUser} = useContext(UserContext)
@@ -53,7 +54,7 @@ const LoginModal = () => {
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 m-0">
               <Label
                 for="emailAddress"
-                className="forum-dark-grey font-weight-bold"
+                className="forum-dark-grey font-weight-bold col-12"
               >
                 Email
               </Label>
@@ -61,7 +62,7 @@ const LoginModal = () => {
                 required
                 className="light-light-grey-background forum-input"
                 type="email"
-                placeholder="Email"
+                placeholder="Email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -69,15 +70,15 @@ const LoginModal = () => {
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
               <Label
              for="password"
-              className="forum-dark-grey font-weight-bold col-12 custom-password-label"
+              className="forum-dark-grey font-weight-bold col-12"
             >
-              Lösenord
+              Password
             </Label>
              <Input
                 required
                 className="light-light-grey-background forum-input col-10 noBorder"
                 type="password"
-                placeholder="Lösenord"
+                placeholder="Password..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -85,26 +86,17 @@ const LoginModal = () => {
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
               {errorMessageShown ? (
                 <div className="error-text mb-2 text-center font-weight-bold">
-                  Felaktigt användarnamn eller lösenord{" "}
+                  Wrong username or password{" "}
                 </div>
               ) : (
                 ""
               )}
               <Button className="forum-button col-xs-8 col-sm-12 col-md-12 col-lg-12 font-weight-bold" onClick={() => doLogin()}>
-                Logga in
+                Login
               </Button>
             </FormGroup>
           </Form>
-          <div className="text-center m-4">
-            <p className="font-italic mb-0">Har du inte ett konto?</p>
-            <p className="font-italic">
-              {" "}
-              Skapa konto{" "}
-              <span className="text-primary click-text inline">
-                <span>här</span>
-              </span>
-            </p>
-          </div>
+          <UserCreation doLogin={doLogin}/>
         </ModalBody>
         <ModalFooter>
           <Button className="forum-button" onClick={toggle}>

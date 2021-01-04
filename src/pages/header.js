@@ -11,6 +11,7 @@ import {
 import LoginModal from '../users/loginModal'
 import PostCreation from '../posts/postCreation'
 
+
 const ForumHeader = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   let history = useHistory();
