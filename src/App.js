@@ -7,6 +7,7 @@ import PostContextProvider from "./context/postContext.js"
 // pages
 import ForumHeader from './pages/header.js'
 import Home from './pages/home'
+import PostPage from './posts/postPage'
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Home />
+              </Route>
+              <Route exact path="/:id">
+                <PostPage/>
               </Route>
             </Switch>
           </main>

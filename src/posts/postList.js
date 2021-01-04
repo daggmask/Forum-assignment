@@ -7,6 +7,7 @@ import PostFilterButton from './postFilterButton'
 const PostList = () => {
   const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])
+  
   const [filterOption, setFilterOption] = useState("Any")
 
   const fetchPosts = async () => {
@@ -40,7 +41,7 @@ const PostList = () => {
           <PostView post={post}/>
           </div>
         )
-      })}
+      }).sort((a,b) => a.timePosted > b.timePosted ? 1 : -1)}
       </Row>
     </div>
   )

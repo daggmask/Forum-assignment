@@ -1,15 +1,18 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { Toast, ToastBody, ToastHeader, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import {UserContext} from "../context/userContext"
 import {PostContext} from '../context/postContext'
+import {getDatePosted} from '../helpers/helpers'
 
 const PostView = ({post}) => {
-  const {render,setRender} = useContext(PostContext)
+  const {render,setRender,selectedPost, setSelectedPost} = useContext(PostContext)
   const {user} = useContext(UserContext)
   const [modal, setModal] = useState(false);
   const [editPressed, setEditPressed] = useState(false)
   const [postTitle, setPostTitle] = useState(post.title)
   const [postContent, setPostContent] = useState(post.content)
+  let history = useHistory();
 
   let condition = user ? post.creatorId === user.id : false
 
@@ -32,10 +35,8 @@ const PostView = ({post}) => {
     setRender(!render)
   }
 
-  const getDatePosted = (time) => {
-    let date =  `
-    ${new Date(time).getFullYear()}-${new Date(time).getMonth() < 10 ? "0" + new Date(time).getMonth() : new Date(time).getMonth()}-${new Date(time).getDay()}`
-    return date
+  const goToPostPage = () => {
+    history.push(`/${post.id}`)
   }
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const PostView = ({post}) => {
 
   return (
     <div className="p-3 bg-dark text-dark my-2 rounded">
-      <Toast onClick={toggle}>
+      <Toast onClick={() => goToPostPage() & setSelectedPost(post)}>
         <ToastHeader>{post.title}</ToastHeader>
         <ToastBody>
           <h6>Posted: {getDatePosted(post.timePosted)}</h6>
@@ -63,6 +64,7 @@ const PostView = ({post}) => {
         <Input value={postTitle} onChange={(e) => setPostTitle(e.target.value)}></Input>
         : postTitle}</ModalHeader>
         <ModalBody>
+          <h6>Posted: {getDatePosted(post.timePosted)}</h6>
           <h6>{post.subject}</h6>
           {editPressed ?
           <Input type="textarea" value={postContent} onChange={(e) => setPostContent(e.target.value)}></Input>

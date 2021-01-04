@@ -4,10 +4,13 @@ export const PostContext = createContext();
 
 const PostContextProvider = (props) => {
   const [render, setRender] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null)
 
   const values = {
     render,
     setRender,
+    selectedPost, 
+    setSelectedPost
   };
 
   return (
