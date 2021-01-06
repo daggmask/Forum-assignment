@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Card, Button, CardTitle, CardText, Form, Input, FormGroup, Label } from 'reactstrap';
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
-import {getDatePosted, DebounceHelper} from '../helpers/helpers'
+import {getDatePosted, DebounceHelper, checkModeratorRole} from '../helpers/helpers'
 import {useHistory } from "react-router-dom";
 import Comments from './comments'
 import CommentField from './commentField'
@@ -10,7 +10,7 @@ import CommentField from './commentField'
 const PostPage = () => {
 
 const {selectedPost, setSelectedPost} = useContext(PostContext)
-const {user, moderatorSubjects, setModeratorSubjects} = useContext(UserContext)
+const {user, moderatorSubjects} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
 const [comments, setComments] = useState([])
@@ -23,24 +23,8 @@ let commentDebounce = new DebounceHelper()
 let condition = user ? selectedPost.creatorId === user.id : false
 let history = useHistory();
 
-const checkModInList = (data) => {
-  let found = false
-  moderatorSubjects.forEach(subject => {
-    if(subject.userId === data.id){
-      found = true
-    }
-  })
-  return found
-}
-
-const checkModeratorRole = (user) => {
-  if(user === null){
-    return false
-  }
-  if(user) return checkModInList(user)
-}
 // eslint-disable-next-line no-mixed-operators
-const [moderatorButtonCondition, setModeratorButtonCondition] = useState(condition || checkModeratorRole(user))
+const [moderatorButtonCondition, setModeratorButtonCondition] = useState(condition || checkModeratorRole(moderatorSubjects, user))
 
 
 const saveChanges = async () => {
@@ -87,7 +71,6 @@ const deletePost = async () => {
 }
 
 const lockPost = async () => {
-  
   let updatedPost = Object.assign({},selectedPost)
   updatedPost.isLocked = !lockedStatus
   setLockedStatus(updatedPost.isLocked)
@@ -101,7 +84,6 @@ const lockPost = async () => {
   })
   .then((res) => res.json())
   .catch((error) => console.error(error));
-
 }
 
 useEffect(() => {
@@ -129,9 +111,10 @@ useEffect(() => {
           <div>
           <Button className="forum-button-dark m-2 col-12" onClick={() => deletePost()}>Remove</Button>
           </div>
+          {user ? user.userRole === "moderator" || user.userRole === "admin" ? 
           <div>
           <Button className="forum-button-dark m-2 col-12" onClick={() => lockPost()}>{lockedStatus ? "unlock post" : "lock post"}</Button>
-          </div>
+          </div> : null : null}
         </div>
          : null}
         </Card>
