@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
 import {UserContext} from "../context/userContext"
 import UserCreation from './userCreation'
+import { useHistory } from "react-router-dom";
 
 const LoginModal = () => {
   const {user, setUser, setModeratorSubjects} = useContext(UserContext)
@@ -12,6 +13,7 @@ const LoginModal = () => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
+  let history = useHistory();
 
   const doLogin = async () => {
     const credentials = {username: username, password: password}
@@ -24,6 +26,7 @@ const LoginModal = () => {
       .then( async (data) => data ? setUser(data)
          & setModal(false)
          & setErrorMessageShown(false)
+         & history.push("/")
          : setErrorMessageShown(true))
       .catch((error) => console.error(error));
   }
@@ -34,6 +37,7 @@ const LoginModal = () => {
     })
       .then((res) => res.json())
       .then(() => setUser(null))
+      .then(() => history.push("/"))
       .catch((error) => console.error(error))
   }
 

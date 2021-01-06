@@ -3,12 +3,15 @@ import { Row } from "reactstrap";
 import PostView from './postView'
 import {PostContext} from '../context/postContext'
 import PostFilterButton from './postFilterButton'
+import {DebounceHelper} from '../helpers/helpers'
 
 const PostList = () => {
   const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])
   
   const [filterOption, setFilterOption] = useState("Any")
+
+  let postDebounce = new DebounceHelper()
 
   const fetchPosts = async () => {
     await fetch("/api/posts")
@@ -27,7 +30,7 @@ const PostList = () => {
   }
 
   useEffect(() => {
-    fetchPosts()
+    postDebounce.debounceHelper(fetchPosts)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[render])
 

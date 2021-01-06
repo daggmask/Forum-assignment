@@ -6,3 +6,16 @@ export const getDatePosted = (time) => {
   ${timeToFormat.getFullYear()}-${timeToFormat.getMonth() < 10 ? "0" + (timeToFormat.getMonth()+1) : (timeToFormat.getMonth()+1)}-${timeToFormat.getDate() < 10 ? "0" + timeToFormat.getDate() : timeToFormat.getDate()} ${timeFormated}`
   return date
 }
+
+export class DebounceHelper{
+  debounceID = null;
+  debounceHelper = (functionData) => {
+    if (this.debounceID !== null) {
+      clearTimeout(this.debounceID);
+      this.debounceID = null;
+    }
+    this.debounceID = setTimeout(() => {
+      functionData();
+    }, 250);
+  };
+}

@@ -3,7 +3,7 @@ import { Card,  CardTitle, CardText } from 'reactstrap';
 import {PostContext} from '../context/postContext'
 import {getDatePosted} from '../helpers/helpers'
 
-const Comments = ({comments, checkModeratorRole, moderatorSubjects}) => {
+const Comments = ({comments, moderatorSubjects}) => {
   const {selectedPost} = useContext(PostContext)
 
   const checkCreator = (commenter) =>{
@@ -11,8 +11,8 @@ const Comments = ({comments, checkModeratorRole, moderatorSubjects}) => {
   }
 
   const checkModerator = (commenter) => {
-    let foundModeratorRole = moderatorSubjects.find(subject => subject.userId === commenter.userId)
-    return checkModeratorRole(commenter) && foundModeratorRole
+    let foundModeratorRole = moderatorSubjects.find(subject => subject.userId === commenter.userId) ||null
+    return foundModeratorRole ? true : false
   }
 
   return(

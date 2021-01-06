@@ -1,13 +1,27 @@
-import React, { createContext, useState} from "react";
+import React, { createContext, useState, useEffect} from "react";
 
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [moderatorSubjects, setModeratorSubjects] = useState([])
+
+  const getMods = async () => {
+    await fetch("/api/usersXsubjects")
+    .then((res) => res.json())
+    .then((data) => setModeratorSubjects(data))
+    .catch((error) => console.error(error))
+    }
+
+    useEffect(() => {
+      getMods()
+    },[])
 
   const values = {
     user,
     setUser,
+    moderatorSubjects, 
+    setModeratorSubjects
   };
 
   return (

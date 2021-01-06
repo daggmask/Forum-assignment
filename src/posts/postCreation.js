@@ -39,7 +39,6 @@ const PostCreation = () => {
   const createPost = async () => {
     let subject = getSubjectObject(postSubject)
     let post = {creatorId: user.id, title:postTitle, content: postContent, subject: subject.subject,subjectId: subject.id , timePosted: new Date().getTime()}
-    console.log(post);
 
     await fetch("/api/posts", {
       method: "POST",
