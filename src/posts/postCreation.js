@@ -1,4 +1,4 @@
-import React, {  useState, useContext } from "react";
+import React, {  useState, useContext, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
 import {UserContext} from "../context/userContext"
 import {PostContext} from '../context/postContext'
@@ -21,8 +21,24 @@ const PostCreation = () => {
     }
   };
 
+  const getSubjectObject = (subject) => {
+    if(subject === "General"){
+      return {id: 1, subject: subject}
+    }
+    if(subject === "Gaming"){
+      return {id: 2, subject: subject}
+    }
+    if(subject === "Daily"){
+      return {id: 3, subject: subject}
+    }
+    if(subject === "Memes"){
+      return {id: 4, subject: subject}
+    }
+  }
+
   const createPost = async () => {
-    let post = {creatorId: user.id, title:postTitle, content: postContent, subject: postSubject, timePosted: new Date().getTime()}
+    let subject = getSubjectObject(postSubject)
+    let post = {creatorId: user.id, title:postTitle, content: postContent, subject: subject.subject,subjectId: subject.id , timePosted: new Date().getTime()}
     console.log(post);
 
     await fetch("/api/posts", {

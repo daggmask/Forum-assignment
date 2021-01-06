@@ -16,7 +16,7 @@ const Comments = ({comments}) => {
           return(
             <div className="mt-2">
             <Card className="col-6 mx-auto">
-            <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator() ? <div><span class="material-icons">face</span> {comment.user}</div> : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
+            <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator(comment.userId) ? <span>👑{comment.user}</span>  : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
             <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
             </Card>
             </div>

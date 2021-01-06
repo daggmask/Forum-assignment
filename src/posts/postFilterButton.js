@@ -9,7 +9,7 @@ const PostFilterButton = ({filterOption, setFilterOption}) => {
   return (
     <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle className="forum-button">
-        Button Dropdown
+        Filter
       </DropdownToggle>
       <DropdownMenu>
         <DropdownItem header>Filter by:</DropdownItem>

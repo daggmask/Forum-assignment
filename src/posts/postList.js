@@ -35,9 +35,9 @@ const PostList = () => {
     <div className="col-12 container">
       <PostFilterButton filterOption={filterOption} setFilterOption={setFilterOption}/>
       <Row>
-      {renderPosts().map(post => {
+      {renderPosts().map((post,i) => {
         return(
-          <div className="col-4">
+          <div className="col-4" key={post.id + i}>
           <PostView post={post}/>
           </div>
         )

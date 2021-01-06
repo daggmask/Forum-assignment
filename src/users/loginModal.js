@@ -23,7 +23,8 @@ const LoginModal = () => {
       .then((res) => res.json())
       .then((data) => data ? setUser(data)
          & setModal(false)
-         & setErrorMessageShown(false) 
+         & setErrorMessageShown(false)
+         & console.log(data) 
          : setErrorMessageShown(true))
       .catch((error) => console.error(error));
   }
