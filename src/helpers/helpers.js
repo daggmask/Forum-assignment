@@ -31,16 +31,14 @@ export const checkModInList = (moderatorSubjects, data) => {
 }
 
 export const checkIfPostedByModerator = (moderatorSubjects,post) => {
-  let found = false
   let moderatorId = 0
   moderatorSubjects.forEach(subject => {
-    if(subject.userId === post.creatorId){
-      found = true
+    if(subject.userId === post.creatorId && subject.subjectId === post.subjectId){
       moderatorId = subject.userId
     }
   })
   console.log(!!moderatorId);
-  return false
+  return !!moderatorId
 }
 
 export const checkModeratorRole = (moderatorSubjects ,user) => {
