@@ -7,7 +7,6 @@ const UserContextProvider = (props) => {
 
   const values = {
     user,
-    // fetchUser,
     setUser,
   };
 

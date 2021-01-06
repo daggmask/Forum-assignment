@@ -20,10 +20,6 @@ const ForumHeader = (props) => {
     history.push("/");
   };
 
-  const goToMyPage = () => {
-    history.push("/mypage");
-  };
-
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
   };

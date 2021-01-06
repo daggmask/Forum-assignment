@@ -9,20 +9,25 @@ module.exports = class RestApi {
 
     let tables = this.getAllTables();
     for (let table of tables) {
+      this.createGetAllRoute(table);
       if(table !== "usersXsubjects"){       
-        this.createGetAllRoute(table);
         if(table !== "comments"){
           this.createGetRoute(table);
         }
         else{
           this.getCommentsForPost(table)
         }
-        this.createPostRoute(table);
         this.createPutRoute(table);
-        this.createDeleteRoute(table);
       }
       else{
         this.getUserModeratorSubjects(table);
+      }
+      this.createPostRoute(table);
+      if(table === "posts"){
+        this.createDeletePostAndComments(table)
+      }
+      else{
+        this.createDeleteRoute(table);
       }
       }
       this.addLoginRoutes();
@@ -108,7 +113,6 @@ module.exports = class RestApi {
   }
 
   getUserModeratorSubjects(table) {
-
     this.app.get(this.prefix + table + "/:id", (req, res) => {
       console.log(table);
       let statement = this.db.prepare(`
@@ -119,6 +123,22 @@ module.exports = class RestApi {
       res.json(result);
     });
   }
+
+  createDeletePostAndComments(table){
+    this.app.delete(this.prefix + table + "/:id", (req,res) => {
+      let removeComments = this.db.prepare(`
+      DELETE FROM comments
+      WHERE post = $id
+      `)
+      removeComments.run(req.params)
+      let removePost = this.db.prepare(`
+        DELETE FROM ${table} WHERE id = $id
+      `)
+      res.json(removePost.run(req.params))
+    })
+  }
+
+
 
   //Add routes for login, check if logged in
   //and logout - /note: not pure rest-routes

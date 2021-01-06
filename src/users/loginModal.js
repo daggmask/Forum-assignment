@@ -4,7 +4,7 @@ import {UserContext} from "../context/userContext"
 import UserCreation from './userCreation'
 
 const LoginModal = () => {
-  const {user,setUser} = useContext(UserContext)
+  const {user, setUser, setModeratorSubjects} = useContext(UserContext)
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +21,9 @@ const LoginModal = () => {
       body: JSON.stringify(credentials),
     })
       .then((res) => res.json())
-      .then((data) => data ? setUser(data)
+      .then( async (data) => data ? setUser(data)
          & setModal(false)
          & setErrorMessageShown(false)
-         & console.log(data) 
          : setErrorMessageShown(true))
       .catch((error) => console.error(error));
   }
@@ -35,7 +34,6 @@ const LoginModal = () => {
     })
       .then((res) => res.json())
       .then(() => setUser(null))
-      .then((data) => console.log(data))
       .catch((error) => console.error(error))
   }
 

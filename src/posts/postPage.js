@@ -3,6 +3,7 @@ import { Card, Button, CardTitle, CardText, Form, Input, FormGroup, Label } from
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
 import {getDatePosted} from '../helpers/helpers'
+import {useHistory } from "react-router-dom";
 import Comments from './comments'
 
 const PostPage = () => {
@@ -15,8 +16,28 @@ const [comments, setComments] = useState([])
 const [editPressed, setEditPressed] = useState(false)
 const [postTitle, setPostTitle] = useState(selectedPost.title)
 const [postContent, setPostContent] = useState(selectedPost.content)
+const [moderatorSubjects, setModeratorSubjects] = useState([])
 
 let condition = user ? selectedPost.creatorId === user.id : false
+let history = useHistory();
+
+const checkModeratorRole = (userToCheck) => {
+  let subject = moderatorSubjects.find(subject => subject.subjectId === selectedPost.subjectId) || null
+  if(subject === null){
+    return false
+  }
+  return true
+}
+
+const getMods = async () => {
+await fetch("/api/usersXsubjects")
+.then((res) => res.json())
+.then((data) => setModeratorSubjects(data)
+& console.log(data))
+.catch((error) => console.error(error))
+}
+const [removeButtonCondition] = useState(condition || checkModeratorRole(user))
+
 
 const saveChanges = async () => {
   let updatedPost = Object.assign({},selectedPost)
@@ -53,9 +74,18 @@ const postComment = async () => {
   .catch((error) => console.error(error))
 }
 
+const deletePost = async () => {
+  await fetch("/api/posts/" + selectedPost.id, {
+    method: "DELETE"
+  })
+    .then(() => history.push("/"))
+    .catch((error) => console.error(error))
+    //Remove comments too
+}
+
 useEffect(() => {
   getPostsComments()
-  console.log("Here");
+  getMods()
   return () => {
     setCommentPost("")
     setComments([])
@@ -84,6 +114,7 @@ useEffect(() => {
             Edit
           </Button>
            : null}
+        {removeButtonCondition ? <Button className="forum-button-dark m-2 col-4 mx-auto" onClick={() => deletePost()}>Remove</Button> : null}
         </Card>
         <div className="container">
         {user ? 
@@ -96,7 +127,7 @@ useEffect(() => {
           </Form>
             :<h6 className="forum-dark-grey text-center m-4">Login to comment</h6> }
         </div> 
-        <Comments comments={comments}/>
+        <Comments comments={comments} checkModeratorRole={checkModeratorRole} moderatorSubjects={moderatorSubjects}/>
     </div>
   )
 } 

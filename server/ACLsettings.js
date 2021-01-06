@@ -67,7 +67,16 @@ module.exports = {
     if (method === "GET") {
       return true;
     }
-    if (method === "GET" && user.userRole) {
+    if (method === "POST" && user.userRole === "moderator") {
+      return true;
+    }
+    if (method === "POST" && user.userRole === "admin") {
+      return true;
+    }
+    if (method === "DELETE" && user.userRole === "moderator") {
+      return true;
+    }
+    if (method === "DELETE" && user.userRole === "admin") {
       return true;
     }
     return false
