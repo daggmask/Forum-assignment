@@ -17,6 +17,10 @@ const UserContextProvider = (props) => {
       getMods()
     },[])
 
+    useEffect(() => {
+      console.log(user);
+    },[user])
+
   const values = {
     user,
     setUser,

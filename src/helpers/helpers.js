@@ -21,6 +21,9 @@ export class DebounceHelper{
 }
 
 export const checkModInList = (moderatorSubjects, data) => {
+  if(data.userRole === "admin"){
+    return true
+  }
   let found = false
   moderatorSubjects.forEach(subject => {
     if(subject.userId === data.id){
@@ -37,7 +40,6 @@ export const checkIfPostedByModerator = (moderatorSubjects,post) => {
       moderatorId = subject.userId
     }
   })
-  console.log(!!moderatorId);
   return !!moderatorId
 }
 

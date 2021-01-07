@@ -15,8 +15,6 @@ const PostView = ({post}) => {
     history.push(`/${post.id}`)
   }
 
- 
-
 
   return (
     <div>
@@ -26,7 +24,7 @@ const PostView = ({post}) => {
       <Toast onClick={() => goToPostPage() & setSelectedPost(post)}>
         <ToastHeader>{post.title}</ToastHeader>
         <ToastBody>
-          <h6>Posted: {getDatePosted(post.timePosted)}</h6>
+          <h6>Posted: {getDatePosted(post.timePosted)} </h6>
          <h6>{post.subject}</h6>
           <p>
           {post.content}
