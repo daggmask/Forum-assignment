@@ -5,6 +5,9 @@ module.exports = {
     if (method === "GET" && user.userRole === req.body.id) {
       return true;
     }
+    if (method === "GET" && user.userRole === "admin") {
+      return true;
+    }
     if (method === "POST") {
       return true;
     }

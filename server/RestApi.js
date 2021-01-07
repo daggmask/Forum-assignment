@@ -10,25 +10,16 @@ module.exports = class RestApi {
     let tables = this.getAllTables();
     for (let table of tables) {
       this.createGetAllRoute(table);
-      if(table !== "usersXsubjects"){       
-        if(table !== "comments"){
-          this.createGetRoute(table);
-        }
-        else{
-          this.getCommentsForPost(table)
-        }
+      if(table !== "usersXsubjects"){  
+        if(table === "users") this.searchUsers(table)     
+        if(table !== "comments")this.createGetRoute(table)
+        else this.getCommentsForPost(table)
         this.createPutRoute(table);
       }
-      else{
-        this.getUserModeratorSubjects(table);
-      }
+      else this.getUserModeratorSubjects(table);
       this.createPostRoute(table);
-      if(table === "posts"){
-        this.createDeletePostAndComments(table)
-      }
-      else{
-        this.createDeleteRoute(table);
-      }
+      if(table === "posts") this.createDeletePostAndComments(table)
+      else this.createDeleteRoute(table);  
       }
       this.addLoginRoutes();
   }
@@ -135,6 +126,16 @@ module.exports = class RestApi {
         DELETE FROM ${table} WHERE id = $id
       `)
       res.json(removePost.run(req.params))
+    })
+  }
+
+  searchUsers(table){
+    this.app.get(this.prefix + table + "/:name", (req,res) => {
+      let statement = this.db.prepare(`
+      SELECT * FROM ${table}
+      WHERE instr(username, $name) > 0
+      `)
+      res.json(statement.all(req.params).map((x) => ({ ...x, password: undefined })))
     })
   }
 

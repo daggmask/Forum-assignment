@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import {
   Navbar,
@@ -10,9 +10,14 @@ import {
 } from "reactstrap";
 import LoginModal from '../users/loginModal'
 import PostCreation from '../posts/postCreation'
+import AdminPanel from '../admin/adminPage'
+import {UserContext} from "../context/userContext"
+import AdminPage from "../admin/adminPage";
 
 
 const ForumHeader = (props) => {
+  const {user} = useContext(UserContext)
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   let history = useHistory();
 
@@ -53,6 +58,14 @@ const ForumHeader = (props) => {
                   <PostCreation/>
                 </NavLink>
               </NavItem>
+              {user && user.userRole === "admin" ?
+              <NavItem>
+                <NavLink>
+                  <AdminPage/>
+                </NavLink>
+              </NavItem>
+              : null}
+
             </>
           </Nav>
       </Navbar>
