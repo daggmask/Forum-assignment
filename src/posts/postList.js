@@ -7,7 +7,7 @@ import {DebounceHelper} from '../helpers/helpers'
 import {UserContext} from "../context/userContext"
 
 const PostList = () => {
-  const { setSelectedPost} = useContext(PostContext)
+  const { selectedPost, setSelectedPost} = useContext(PostContext)
   const {user,  setIsMod} = useContext(UserContext)
   const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])
@@ -19,7 +19,20 @@ const PostList = () => {
   const fetchPosts = async () => {
     await fetch("/api/posts")
       .then((response) => response.json())
-      .then((data) => setPostList(data))
+      .then((data) => {
+        let list = data
+        let newList = []
+        list.forEach(async (post,i) => {
+          let comments = await fetch("/api/comments/" + post.id)
+          comments = await comments.json()
+          let postWithComments = Object.assign({},post)
+          postWithComments.comments = comments
+          newList.push(postWithComments)
+          if(i === data.length - 1){
+            setPostList(newList)
+          }
+        })
+      })
       .catch((err) => console.error(err));
   };
 
@@ -51,7 +64,7 @@ const PostList = () => {
     }
 }
 
-const doCheckAndSetPost = (post) => {
+const doCheckAndSetPost = async (post) => {
   let something = checkModerator(post)
   setIsMod(something)
   setSelectedPost(post)

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Button, Form, Input, FormGroup, Label } from 'reactstrap';
 
 const CommentField = ({commentPost, setCommentPost, postComment, locked, user}) => {
+
+
   return(
   <div>
     {locked ? 

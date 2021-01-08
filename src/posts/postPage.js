@@ -13,12 +13,10 @@ const {selectedPost, setSelectedPost} = useContext(PostContext)
 const {user, isMod} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
-const [comments, setComments] = useState([])
 const [editPressed, setEditPressed] = useState(false)
 const [postTitle, setPostTitle] = useState(selectedPost.title)
 const [postContent, setPostContent] = useState(selectedPost.content)
 const [lockedStatus, setLockedStatus] = useState(!!selectedPost.isLocked)
-let commentDebounce = new DebounceHelper()
 
 let condition = user ? selectedPost.creatorId === user.id : false
 let history = useHistory();
@@ -50,13 +48,6 @@ const saveChanges = async () => {
   .catch((error) => console.error(error));
 }
 
-const getPostsComments = async () => {
-  await fetch("/api/comments/" + selectedPost.id)
-    .then((res) => res.json())
-    .then((data) => setComments(data) & setCommentPost(""))
-    .catch((error) => console.error(error))
-}
-
 const postComment = async () => {
   // eslint-disable-next-line no-mixed-operators
   let postedByMod = user && user.userRole === "admin" || user && user.userRole === "moderator" ? 1 : 0
@@ -67,7 +58,7 @@ const postComment = async () => {
     body: JSON.stringify(commentCredentials),
   })
   .then((res) => res.json())
-  .then(() => commentDebounce.debounceHelper(getPostsComments))
+  .then(() => setCommentPost(""))
   .catch((error) => console.error(error))
 }
 
@@ -94,14 +85,6 @@ const lockPost = async () => {
   .then((res) => res.json())
   .catch((error) => console.error(error));
 }
-
-useEffect(() => {
-  commentDebounce.debounceHelper(getPostsComments)
-  return () => {
-    setCommentPost("")
-    setComments([])
-  }
-},)
 
   return(
     <div>
@@ -135,7 +118,7 @@ useEffect(() => {
           locked={lockedStatus} 
           user={user}/>
         </div> 
-        <Comments comments={comments}/>
+        <Comments comments={selectedPost.comments}/>
     </div>
   )
 } 

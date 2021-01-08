@@ -21,8 +21,7 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route exact path="/:id">
-                <PostPage/>
+              <Route exact path="/:id" render={(props => ( <PostPage {...props}/>))}>   
               </Route>
             </Switch>
           </main>
