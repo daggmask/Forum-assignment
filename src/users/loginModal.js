@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
 import {UserContext} from "../context/userContext"
 import UserCreation from './userCreation'
@@ -23,11 +23,17 @@ const LoginModal = () => {
       body: JSON.stringify(credentials),
     })
       .then((res) => res.json())
-      .then( async (data) => data ? setUser(data)
-         & setModal(false)
-         & setErrorMessageShown(false)
-         & history.push("/")
-         : setErrorMessageShown(true))
+      .then( async (data) => {
+        if(data){
+          setUser(data)
+          setModal(false)
+          setErrorMessageShown(false)
+          history.push("/")
+        }
+        else{
+          setErrorMessageShown(true)
+        }
+      })
       .catch((error) => console.error(error));
   }
 

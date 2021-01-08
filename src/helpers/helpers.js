@@ -46,7 +46,6 @@ export const checkIfModHasAuthorities = (authList = [], subject) => {
   let authFound = null
   if(authList !== null){      
     authFound = authList.find(authority => authority === subject) || null
-    console.log(authFound);
   }
  return authFound
 }

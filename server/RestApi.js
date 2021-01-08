@@ -44,7 +44,6 @@ module.exports = class RestApi {
 
   createGetRoute(table) {
     this.app.get(this.prefix + table + "/:id", (req, res) => {
-      console.log(table);
       let statement = this.db.prepare(`
       SELECT * FROM ${table}
       WHERE id = $id
@@ -106,7 +105,6 @@ module.exports = class RestApi {
   getUserModeratorSubjects(table) {
     
     this.app.get(this.prefix + table + "/:id", (req, res) => {
-      console.log(table);
       let statement = this.db.prepare(`
       SELECT * FROM ${table}
       WHERE userId = $id
@@ -149,7 +147,6 @@ module.exports = class RestApi {
       if (req.body.password) {
         req.body.password = Encrypt.multiEncrypt(req.body.password);
       }
-      console.log(req.body);
 
       let statements = this.db.prepare(`
         SELECT * FROM users

@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import LoginModal from '../users/loginModal'
 import PostCreation from '../posts/postCreation'
-import AdminPanel from '../admin/adminPage'
 import {UserContext} from "../context/userContext"
 import AdminPage from "../admin/adminPage";
 

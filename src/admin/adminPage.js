@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
 import UserList from './usersList'
 
@@ -13,7 +13,7 @@ const AdminPage = () => {
   const getUserList = async () => {
     await fetch("/api/users/" + searchData)
       .then((res) => res.json())
-      .then((data) => setUserList(data) & console.log(data))
+      .then((data) => setUserList(data))
       .catch((error) => console.error(error))
   }
 

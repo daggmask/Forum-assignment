@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import { ListGroupItem, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup  } from 'reactstrap';
 import {checkIfModerator} from '../helpers/helpers'
 
@@ -12,7 +12,6 @@ const UserDetail = ({user, getUserList}) => {
 
   const toggle = () => {
     setModal(!modal)
-    console.log(checkIfModerator(user));
   }
   
   const save = async () => {

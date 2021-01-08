@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Card, Button, CardTitle, CardText, Form, Input, FormGroup, Label } from 'reactstrap';
+import { Card, Button, CardTitle, CardText, Input} from 'reactstrap';
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
 import {getDatePosted, DebounceHelper} from '../helpers/helpers'
@@ -10,7 +10,7 @@ import CommentField from './commentField'
 const PostPage = () => {
 
 const {selectedPost, setSelectedPost} = useContext(PostContext)
-const {user, isMod, setIsMod} = useContext(UserContext)
+const {user, isMod} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
 const [comments, setComments] = useState([])
@@ -32,10 +32,6 @@ const checkAccess = () => {
 
 // eslint-disable-next-line no-mixed-operators
 let moderatorButtonCondition = checkAccess()
-console.log(condition);
-console.log(isMod);
-console.log(user? user.userRole === "admin" : false);
-console.log(moderatorButtonCondition);
 
 
 const saveChanges = async () => {
@@ -105,7 +101,7 @@ useEffect(() => {
     setCommentPost("")
     setComments([])
   }
-}, [])
+},)
 
   return(
     <div>

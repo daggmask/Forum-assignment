@@ -6,11 +6,6 @@ const UserContextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [isMod, setIsMod] = useState(false)
 
-
-    useEffect(() => {
-      console.log(user);
-    },[user])
-
   const values = {
     user,
     setUser,

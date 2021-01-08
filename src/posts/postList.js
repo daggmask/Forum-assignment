@@ -7,8 +7,8 @@ import {DebounceHelper} from '../helpers/helpers'
 import {UserContext} from "../context/userContext"
 
 const PostList = () => {
-  const {selectedPost, setSelectedPost} = useContext(PostContext)
-  const {user, isMod, setIsMod} = useContext(UserContext)
+  const { setSelectedPost} = useContext(PostContext)
+  const {user,  setIsMod} = useContext(UserContext)
   const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])
   
@@ -35,7 +35,6 @@ const PostList = () => {
   const checkModerator = (post) => {
     if(user !== null && post !== null){
       if(user.userRole === "admin") return true
-      console.log(user);
       let authList = []
       for(let area in user){
         if(area === "id" || area === "username" || area === "userRole"){
@@ -54,7 +53,6 @@ const PostList = () => {
 
 const doCheckAndSetPost = (post) => {
   let something = checkModerator(post)
-  console.log(something);
   setIsMod(something)
   setSelectedPost(post)
 }

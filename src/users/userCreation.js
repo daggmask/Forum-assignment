@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {useState} from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from "reactstrap";
 
 const UserCreation = ({doLogin}) => {
@@ -12,16 +12,27 @@ const UserCreation = ({doLogin}) => {
 
   const registerUser = async () => {
     const credentials = {username: username, password: password, userRole: "basicUser"}
-    await fetch("/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    })
-      .then((res) => res.json()
-        & setModal(false)
-        & setErrorMessageShown(false)
-        & doLogin())
-      .catch((error) => console.error(error));
+    try{
+      await fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      })
+        .then((res) => {
+          if(res.ok){
+            setModal(false)
+            setErrorMessageShown(false)
+            doLogin()
+          }
+          else{
+            setErrorMessageShown(true)
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+    catch{
+      console.log("error");
+    }
   }
 
   return(
