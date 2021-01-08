@@ -24,7 +24,7 @@ let condition = user ? selectedPost.creatorId === user.id : false
 let history = useHistory();
 
 // eslint-disable-next-line no-mixed-operators
-const [moderatorButtonCondition, setModeratorButtonCondition] = useState(condition || checkModeratorRole(moderatorSubjects, user))
+const [moderatorButtonCondition] = useState(condition || checkModeratorRole(moderatorSubjects, user))
 
 
 const saveChanges = async () => {
@@ -51,7 +51,9 @@ const getPostsComments = async () => {
 }
 
 const postComment = async () => {
-  let commentCredentials = {post: selectedPost.id, user: user.username, userId: user.id, content: commentPost, timePosted: new Date().getTime()}
+  // eslint-disable-next-line no-mixed-operators
+  let postedByMod = user && user.userRole === "admin" || user && user.userRole === "moderator" ? 1 : 0
+  let commentCredentials = {post: selectedPost.id, user: user.username, userId: user.id, content: commentPost, timePosted: new Date().getTime(), postedByModerator: postedByMod}
   await fetch("/api/comments",{
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -119,7 +121,12 @@ useEffect(() => {
          : null}
         </Card>
         <div className="container">
-          <CommentField commentPost={commentPost} setCommentPost={setCommentPost} postComment={postComment} locked={lockedStatus} user={user}/>
+          <CommentField 
+          commentPost={commentPost} 
+          setCommentPost={setCommentPost} 
+          postComment={postComment} 
+          locked={lockedStatus} 
+          user={user}/>
         </div> 
         <Comments comments={comments} checkModeratorRole={checkModeratorRole} moderatorSubjects={moderatorSubjects}/>
     </div>

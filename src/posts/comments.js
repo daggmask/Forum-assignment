@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { Card,  CardTitle, CardText } from 'reactstrap';
 import {PostContext} from '../context/postContext'
-import {getDatePosted, checkModerator, checkCreator} from '../helpers/helpers'
+import {getDatePosted, checkModerator, checkCreator,checkIfModerator, checkIfModHasAuthorities} from '../helpers/helpers'
 
 const Comments = ({comments, moderatorSubjects}) => {
   const {selectedPost} = useContext(PostContext)

@@ -5,7 +5,7 @@ import UserCreation from './userCreation'
 import { useHistory } from "react-router-dom";
 
 const LoginModal = () => {
-  const {user, setUser, setModeratorSubjects} = useContext(UserContext)
+  const {user, setUser} = useContext(UserContext)
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

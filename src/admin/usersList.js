@@ -1,28 +1,13 @@
 import React from 'react'
-import { ListGroup, ListGroupItem, Badge  } from 'reactstrap';
+import { ListGroup, ListGroupItem, Badge, Button  } from 'reactstrap';
+import UserDetail from './userDetail'
 
-const UsersList = ({userList}) => {
-
+const UsersList = ({userList, getUserList}) => {
 
   return(
     <ListGroup>
-      {userList.map((user, i) => {
-        return(
-          <div key={user.id + i}>
-            {user.userRole === "moderator" ?           
-            <ListGroupItem className="mt-2 justify-content-between" color="secondary">
-            Name: {user.username} Role: {user.userRole}
-          </ListGroupItem>
-          : user.userRole === "admin" ? 
-          <ListGroupItem className="mt-2 justify-content-between" color="primary">
-          Name: {user.username} Role: {user.userRole}
-        </ListGroupItem>
-        : 
-        <ListGroupItem className="mt-2 justify-content-between">
-        Name: {user.username} Role: {user.userRole}
-      </ListGroupItem>}
-          </div>
-        )
+      {userList.map((user,i) => {
+        return(<UserDetail user={user} getUserList={getUserList}/>)
       })}
     </ListGroup>
   )

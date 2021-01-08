@@ -11,9 +11,9 @@ module.exports = class RestApi {
     for (let table of tables) {
       this.createGetAllRoute(table);
       if(table !== "usersXsubjects"){  
-        if(table === "users") this.searchUsers(table)     
-        if(table !== "comments")this.createGetRoute(table)
-        else this.getCommentsForPost(table)
+        if(table === "users") {this.searchUsers(table) }    
+        if(table !== "comments"){this.createGetRoute(table)}
+        else {this.getCommentsForPost(table)}
         this.createPutRoute(table);
       }
       else this.getUserModeratorSubjects(table);
@@ -38,7 +38,7 @@ module.exports = class RestApi {
       let statement = this.db.prepare(`
       SELECT * FROM ${table}
     `);
-      res.json(statement.all().map((x) => ({ ...x, password: undefined })));
+      res.json(statement.all().map((x) => ({ ...x, password: undefined})));
     });
   }
 
@@ -104,6 +104,7 @@ module.exports = class RestApi {
   }
 
   getUserModeratorSubjects(table) {
+    
     this.app.get(this.prefix + table + "/:id", (req, res) => {
       console.log(table);
       let statement = this.db.prepare(`

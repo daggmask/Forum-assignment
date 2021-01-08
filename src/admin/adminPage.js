@@ -32,10 +32,10 @@ const AdminPage = () => {
               <Button className="mt-2 forum-button" onClick={() => getUserList()} >Search</Button>
             </FormGroup>
           </Form>
-          <UserList userList={userList}/>
+          <UserList userList={userList} getUserList={getUserList}/>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>Close</Button>
+          <Button className="forum-button" onClick={toggle}>Close</Button>
         </ModalFooter>
       </Modal>
     </div>
