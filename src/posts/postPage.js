@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Card, Button, CardTitle, CardText, Form, Input, FormGroup, Label } from 'reactstrap';
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
-import {getDatePosted, DebounceHelper, checkModeratorRole} from '../helpers/helpers'
+import {getDatePosted, DebounceHelper} from '../helpers/helpers'
 import {useHistory } from "react-router-dom";
 import Comments from './comments'
 import CommentField from './commentField'
@@ -10,7 +10,7 @@ import CommentField from './commentField'
 const PostPage = () => {
 
 const {selectedPost, setSelectedPost} = useContext(PostContext)
-const {user, moderatorSubjects} = useContext(UserContext)
+const {user, isMod, setIsMod} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
 const [comments, setComments] = useState([])
@@ -23,8 +23,19 @@ let commentDebounce = new DebounceHelper()
 let condition = user ? selectedPost.creatorId === user.id : false
 let history = useHistory();
 
+const checkAccess = () => {
+  if(condition) return true
+  if(isMod) return true
+  if( user && user.userRole === "admin") return true
+  return false
+}
+
 // eslint-disable-next-line no-mixed-operators
-const [moderatorButtonCondition] = useState(condition || checkModeratorRole(moderatorSubjects, user))
+let moderatorButtonCondition = checkAccess()
+console.log(condition);
+console.log(isMod);
+console.log(user? user.userRole === "admin" : false);
+console.log(moderatorButtonCondition);
 
 
 const saveChanges = async () => {
@@ -102,7 +113,7 @@ useEffect(() => {
           <CardTitle className="mx-auto"><h4>
             {editPressed ? <Input value={postTitle} onChange={(e) => setPostTitle(e.target.value)}></Input>: postTitle}</h4>
         </CardTitle>
-          <CardTitle className="mx-auto"><h6>Posted: {getDatePosted(selectedPost.timePosted)}</h6></CardTitle>
+          <CardTitle className="mx-auto"><h6>Posted: {getDatePosted(selectedPost.timePosted)} by {selectedPost.creator}</h6></CardTitle>
         <CardText className="mx-auto"> 
         {editPressed ?<Input type="textarea" value={postContent} onChange={(e) => setPostContent(e.target.value)}></Input>: postContent}
           </CardText>
@@ -128,7 +139,7 @@ useEffect(() => {
           locked={lockedStatus} 
           user={user}/>
         </div> 
-        <Comments comments={comments} checkModeratorRole={checkModeratorRole} moderatorSubjects={moderatorSubjects}/>
+        <Comments comments={comments}/>
     </div>
   )
 } 

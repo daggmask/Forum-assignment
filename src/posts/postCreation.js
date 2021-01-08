@@ -43,6 +43,7 @@ const PostCreation = () => {
   const createPost = async () => {
     let subject = getSubjectObject(postSubject)
     let post = {
+      creator: user.username,
       creatorId: user.id, 
       title:postTitle, 
       content: postContent, 

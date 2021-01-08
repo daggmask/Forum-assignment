@@ -2,10 +2,7 @@ module.exports = {
   restPrefix: "/api/",
   //route api handlers for each api route
   users(user, method, req) {
-    if (method === "GET" && user.userRole === req.body.id) {
-      return true;
-    }
-    if (method === "GET" && user.userRole === "admin") {
+    if (method === "GET") {
       return true;
     }
     if (method === "POST") {

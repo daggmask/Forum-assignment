@@ -1,16 +1,16 @@
-import React, { useContext} from 'react'
+import React from 'react'
 import { Toast, ToastBody, ToastHeader } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import {PostContext} from '../context/postContext'
 import {getDatePosted} from '../helpers/helpers'
 
 const PostView = ({post}) => {
-  const {selectedPost, setSelectedPost} = useContext(PostContext)
   let history = useHistory();
 
-  const goToPostPage = () => {
+  const pushToPage = () => {
     history.push(`/${post.id}`)
+    
   }
+
 
   //Something caused the boolean to reverse, couldn't find the cause
   return (
@@ -18,7 +18,7 @@ const PostView = ({post}) => {
       {!post.postedByModerator
       ?     
       <div className="p-3 bg-dark text-dark my-2 rounded">
-      <Toast onClick={() => goToPostPage() & setSelectedPost(post)}>
+      <Toast onClick={() => pushToPage()}>
         <ToastHeader>{post.title}</ToastHeader>
         <ToastBody>
           <h6>Posted: {getDatePosted(post.timePosted)} </h6>
@@ -31,7 +31,7 @@ const PostView = ({post}) => {
     </div>
       : 
       <div className="p-3 bg-warning text-dark my-2 rounded">
-      <Toast onClick={() => goToPostPage() & setSelectedPost(post)}>
+      <Toast onClick={() => pushToPage()}>
         <ToastHeader>{post.title} - Warning by Moderator</ToastHeader>
         <ToastBody>
           <h6>Posted: {getDatePosted(post.timePosted)}</h6>

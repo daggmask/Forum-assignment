@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import { Card,  CardTitle, CardText } from 'reactstrap';
 import {PostContext} from '../context/postContext'
-import {getDatePosted, checkModerator, checkCreator,checkIfModerator, checkIfModHasAuthorities} from '../helpers/helpers'
+import {getDatePosted, checkCreator} from '../helpers/helpers'
 
-const Comments = ({comments, moderatorSubjects}) => {
+const Comments = ({comments, postSubject}) => {
   const {selectedPost} = useContext(PostContext)
 
   return(
@@ -12,7 +12,7 @@ const Comments = ({comments, moderatorSubjects}) => {
           return(
             <div className="mt-2" key={comment.id + i}>
             <Card className="col-6 mx-auto">
-            <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator(selectedPost,comment.userId) ? <span>👑{comment.user}</span>  : checkModerator(moderatorSubjects,comment) ? <span>🤖{comment.user}</span> : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
+            <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator(selectedPost,comment.userId) ? <span>Creator {comment.user}</span>  : !!comment.postedByModerator ? <span>Moderator {comment.user}</span> : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
             <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
             </Card>
             </div>
