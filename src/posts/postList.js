@@ -7,7 +7,7 @@ import {DebounceHelper} from '../helpers/helpers'
 import {UserContext} from "../context/userContext"
 
 const PostList = () => {
-  const { selectedPost, setSelectedPost} = useContext(PostContext)
+  const {setSelectedPost} = useContext(PostContext)
   const {user,  setIsMod} = useContext(UserContext)
   const {render} = useContext(PostContext)
   const [postList, setPostList] = useState([])

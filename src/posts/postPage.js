@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Card, Button, CardTitle, CardText, Input} from 'reactstrap';
 import {PostContext} from '../context/postContext'
 import {UserContext} from "../context/userContext"
-import {getDatePosted, DebounceHelper} from '../helpers/helpers'
+import {getDatePosted} from '../helpers/helpers'
 import {useHistory } from "react-router-dom";
 import Comments from './comments'
 import CommentField from './commentField'
@@ -13,6 +13,7 @@ const {selectedPost, setSelectedPost} = useContext(PostContext)
 const {user, isMod} = useContext(UserContext)
 
 const [commentPost, setCommentPost] = useState("")
+const [warningComment, setWarningComment] = useState(false)
 const [editPressed, setEditPressed] = useState(false)
 const [postTitle, setPostTitle] = useState(selectedPost.title)
 const [postContent, setPostContent] = useState(selectedPost.content)
@@ -51,7 +52,7 @@ const saveChanges = async () => {
 const postComment = async () => {
   // eslint-disable-next-line no-mixed-operators
   let postedByMod = user && user.userRole === "admin" || user && user.userRole === "moderator" ? 1 : 0
-  let commentCredentials = {post: selectedPost.id, user: user.username, userId: user.id, content: commentPost, timePosted: new Date().getTime(), postedByModerator: postedByMod}
+  let commentCredentials = {post: selectedPost.id, user: user.username, userId: user.id, content: commentPost, timePosted: new Date().getTime(), postedByModerator: postedByMod, isWarningMessage: warningComment ? 1 : 0}
   await fetch("/api/comments",{
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -59,6 +60,7 @@ const postComment = async () => {
   })
   .then((res) => res.json())
   .then(() => setCommentPost(""))
+  .then(() => setWarningComment(false))
   .catch((error) => console.error(error))
 }
 
@@ -116,7 +118,11 @@ const lockPost = async () => {
           setCommentPost={setCommentPost} 
           postComment={postComment} 
           locked={lockedStatus} 
-          user={user}/>
+          user={user}
+          setWarningComment={setWarningComment}
+          warningComment={warningComment}
+          moderatorButtonCondition={moderatorButtonCondition}
+          />
         </div> 
         <Comments comments={selectedPost.comments}/>
     </div>

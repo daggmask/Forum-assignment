@@ -11,10 +11,16 @@ const Comments = ({comments, postSubject}) => {
         {comments.map((comment, i) => {
           return(
             <div className="mt-2" key={comment.id + i}>
-            <Card className="col-6 mx-auto">
+              {!comment.isWarningMessage ?
+              <Card className="col-6 mx-auto">
             <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator(selectedPost,comment.userId) ? <span>Creator {comment.user}</span>  : !!comment.postedByModerator ? <span>Moderator {comment.user}</span> : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
             <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
             </Card>
+            :
+            <Card className="col-6 mx-auto" color="danger">
+            <CardTitle className="forum-dark-grey m-2"><h6>{checkCreator(selectedPost,comment.userId) ? <span>Creator {comment.user}</span>  : !!comment.postedByModerator ? <span>Moderator {comment.user}</span> : comment.user} - {getDatePosted(comment.timePosted)}</h6></CardTitle>
+            <CardText className="forum-dark-grey m-2">{comment.content}</CardText>
+            </Card>}
             </div>
           )
         }).sort((a,b) => a.timePosted > b.timePosted ? 1 : -1)}
