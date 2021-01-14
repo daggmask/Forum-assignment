@@ -12,11 +12,11 @@ module.exports = {
   // the ports
   ports: {
     // where you want to run the 'joint' proxied server
-    main: 3001,
+    main: 4003,
     // where you want to run the react-dev-server
     react: 3456,
     // where you serve your api (make sure to serve it on that port)
-    api: 4002
+    api: 3001
   },
   // a path to an optional script to run after builds
   postBuildScript: './postBuildScript.js',
