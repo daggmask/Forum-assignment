@@ -14,7 +14,7 @@ module.exports = {
     // where you want to run the 'joint' proxied server
     main: 4003,
     // where you want to run the react-dev-server
-    react: 3456,
+    react: 3457,
     // where you serve your api (make sure to serve it on that port)
     api: 3001
   },
