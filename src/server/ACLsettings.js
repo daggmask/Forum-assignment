@@ -8,9 +8,6 @@ module.exports = {
     if (method === "POST") {
       return true;
     }
-    // if (method === "POST" && req.body.userRole === "basicUser") {
-    //   return true;
-    // }
     if (method === "PUT" && user.userRole === "admin") {
       return true;
     }
