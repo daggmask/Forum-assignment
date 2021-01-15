@@ -2,7 +2,7 @@ const sqlite3 = require("better-sqlite3");
 const Encrypt = require("./Encrypt");
 
 module.exports = class RestApi {
-  constructor(expressApp, urlPrefix = "/api/", pathToDb = "./server/forum.db") {
+  constructor(expressApp, urlPrefix = "/api/", pathToDb = "./src/server/forum.db") {
     this.app = expressApp;
     this.db = sqlite3(pathToDb);
     this.prefix = urlPrefix;
