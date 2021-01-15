@@ -26,7 +26,7 @@ module.exports = {
     if (method === "GET") {
       return true;
     }
-    if (method === "POST" && user.userRole) {
+    if (method === "POST" && user.userRole && user.username !== "") {
       return true;
     }
     if (method === "PUT" && user.id === req.body.creatorId) {

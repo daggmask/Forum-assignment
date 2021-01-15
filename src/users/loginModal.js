@@ -16,25 +16,28 @@ const LoginModal = () => {
   let history = useHistory();
 
   const doLogin = async () => {
-    const credentials = {username: username, password: password}
-    await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    })
-      .then((res) => res.json())
-      .then( async (data) => {
-        if(data){
-          setUser(data)
-          setModal(false)
-          setErrorMessageShown(false)
-          history.push("/")
-        }
-        else{
-          setErrorMessageShown(true)
-        }
+    if(username !== "" && password !== ""){
+      const credentials = {username: username, password: password}
+      await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
       })
-      .catch((error) => console.error(error));
+        .then((res) => res.json())
+        .then( async (data) => {
+          if(data){
+            setUser(data)
+            setModal(false)
+            setErrorMessageShown(false)
+            history.push("/")
+          }
+          else{
+            setErrorMessageShown(true)
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+    else(setErrorMessageShown(true))
   }
 
   const doLogout = async() => {
