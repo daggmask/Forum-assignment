@@ -5,7 +5,7 @@ module.exports = {
     if (method === "GET") {
       return true;
     }
-    if (method === "POST" && req.body.username !== "") {
+    if (method === "POST" && req.body.username !== "" && req.body.userRole === "basicUser") {
       return true;
     }
     if (method === "PUT" && user.userRole === "admin") {
