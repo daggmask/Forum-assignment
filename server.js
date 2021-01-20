@@ -24,4 +24,8 @@ app.use(ACL(ACLsettings))
 //Start webserver
 app.listen(3001, () => {console.log('Listening on port 3001');})
 
+app.get('/', function(req, res) {
+  console.log(req.get('user-agent'));
+});
+
 new RestApi(app)
