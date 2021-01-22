@@ -35,6 +35,16 @@ const UserCreation = ({doLogin}) => {
     }
   }
 
+  const validPassword = (password) => {
+    let start = `Password needs to contain at least`;
+    if (!password.match(/[a-z]+/)) return `${start} one lowercase letter`;
+    if (!password.match(/[A-Z]+/)) return `${start} one uppercase letter`;
+    if (!password.match(/[0-9]+/)) return `${start} one digit`;
+    if (!password.match(/[$@#&!]+/)) return `${start} one special character`;
+    if (password.length < 5) return `${start} 10 characters`;
+    return null;
+  };
+
   return(
     <div>
       <div className="text-center m-4" onClick={toggle}>
@@ -85,7 +95,7 @@ const UserCreation = ({doLogin}) => {
             <FormGroup className="col-xs-8 col-sm-12 col-md-12 col-lg-12 mt-2">
               {errorMessageShown ? (
                 <div className="error-text mb-2 text-center font-weight-bold">
-                  Invalid username or password{" "}
+                  {validPassword(password)}
                 </div>
               ) : (
                 ""

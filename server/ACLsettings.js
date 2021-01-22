@@ -5,7 +5,10 @@ module.exports = {
     if (method === "GET") {
       return true;
     }
-    if (method === "POST" && req.body.username !== "" && req.body.userRole === "basicUser") {
+    if (method === "POST" && 
+          req.body.username !== "" && 
+          req.body.userRole === "basicUser" && 
+          validPassword(req.body.password)) {
       return true;
     }
     if (method === "PUT" && user.userRole === "admin") {
@@ -75,4 +78,13 @@ module.exports = {
     }
     return false
   },
+};
+
+const validPassword = (password) => {
+  if (!password.match(/[a-z]+/)) return false;
+  if (!password.match(/[A-Z]+/)) return false;
+  if (!password.match(/[0-9]+/)) return false;
+  if (!password.match(/[$@#&!]+/)) return false;
+  if (password.length < 5) return false;
+  return true;
 };
