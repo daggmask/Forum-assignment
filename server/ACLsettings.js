@@ -63,21 +63,6 @@ module.exports = {
       return true
     }
   },
-  usersXsubjects(user, method, req) {
-    if (method === "GET") {
-      return true;
-    }
-    if (method === "POST" && user.userRole === "admin") {
-      return true;
-    }
-    if(method === "PUT" && user.userRole === "admin"){
-      return true
-    }
-    if (method === "DELETE" && user.userRole === "admin") {
-      return true;
-    }
-    return false
-  },
 };
 
 const validPassword = (password) => {

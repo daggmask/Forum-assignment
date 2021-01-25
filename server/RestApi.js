@@ -102,18 +102,6 @@ module.exports = class RestApi {
     });
   }
 
-  getUserModeratorSubjects(table) {
-    
-    this.app.get(this.prefix + table + "/:id", (req, res) => {
-      let statement = this.db.prepare(`
-      SELECT * FROM ${table}
-      WHERE userId = $id
-    `);
-      let result = statement.all(req.params) || [];
-      res.json(result);
-    });
-  }
-
   createDeletePostAndComments(table){
     this.app.delete(this.prefix + table + "/:id", (req,res) => {
       let removeComments = this.db.prepare(`
